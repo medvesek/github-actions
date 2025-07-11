@@ -1,0 +1,29 @@
+name: "Build"
+description: "Build a github action"
+
+inputs:
+  dir:
+    description: dir
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup
+      shell: bash
+      working-directory: ${{ inputs.dir }}
+      run: npm install
+    - name: Build
+      shell: bash
+      working-directory: ${{ inputs.dir }}
+      run: npx @vercel/ncc build src/index.js
+    - name: Commit
+      shell: bash
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add .
+        git commit -m "Build"
+        git push

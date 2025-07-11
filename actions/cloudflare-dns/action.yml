@@ -1,0 +1,17 @@
+name: "Create cloudflare dns record"
+description: "Create cloudflare dns record"
+
+inputs:
+  CLOUDFLARE_API_TOKEN:
+    description: "Cloudflare token"
+    required: true
+  hostname:
+    description: hostname
+    required: true
+  targetIp:
+    description: targetIp
+    required: true
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

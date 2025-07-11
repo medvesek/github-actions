@@ -8,6 +8,8 @@ jobs:
     name: Build cloudflare-dns action
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - uses: ./.github/actions/build-js-action
         with:
           dir: actions/cloudflare-dns

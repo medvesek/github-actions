@@ -55,7 +55,7 @@ async function getSiteId() {
   try {
     return await readFile(await siteIdPath(), "utf-8");
   } catch (e) {
-    if (["ENOENT", "EISDIR"].includes(e.code)) {
+    if (["ENOENT"].includes(e.code)) {
       console.log("site_id file not found");
       return null;
     }
@@ -72,6 +72,7 @@ async function writeSiteId(siteId) {
   await execCmd(
     `git -c user.name="Github Actions" -c user.email="github_actions@github.com" commit -m "Added site_id"`
   );
+  await execCmd(`git push`);
 }
 
 async function getRepoRoot() {
@@ -90,7 +91,7 @@ function execCmd(cmd) {
 }
 
 async function deploySite({ dir, client, siteId }) {
-  const fileNames = await readdir(dir);
+  const fileNames = await readdir(dir, { recursive: true });
 
   const fileDigests = {};
   const fileContents = {};

@@ -33538,6 +33538,13 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
 
 /***/ }),
 
+/***/ 1943:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
+
+/***/ }),
+
 /***/ 8611:
 /***/ ((module) => {
 
@@ -35880,7 +35887,7 @@ return new B(c,{type:"multipart/form-data; boundary="+b})}
 
 /***/ }),
 
-/***/ 1017:
+/***/ 416:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 
@@ -39494,8 +39501,8 @@ class NetlifyAPI {
 }
 const methods = getOperations();
 
-;// CONCATENATED MODULE: external "fs/promises"
-const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs/promises");
+// EXTERNAL MODULE: external "fs/promises"
+var promises_ = __nccwpck_require__(1943);
 // EXTERNAL MODULE: external "crypto"
 var external_crypto_ = __nccwpck_require__(6982);
 // EXTERNAL MODULE: external "child_process"
@@ -39558,7 +39565,7 @@ async function siteIdPath() {
 
 async function getSiteId() {
   try {
-    return await (0,promises_namespaceObject.readFile)(await siteIdPath(), "utf-8");
+    return await (0,promises_.readFile)(await siteIdPath(), "utf-8");
   } catch (e) {
     if (["ENOENT"].includes(e.code)) {
       console.log("site_id file not found");
@@ -39571,8 +39578,8 @@ async function getSiteId() {
 async function writeSiteId(siteId) {
   const fullPath = await siteIdPath();
   const parentDir = fullPath.split("/").slice(0, -1).join("/");
-  await (0,promises_namespaceObject.mkdir)(parentDir, { recursive: true });
-  await (0,promises_namespaceObject.writeFile)(fullPath, siteId);
+  await (0,promises_.mkdir)(parentDir, { recursive: true });
+  await (0,promises_.writeFile)(fullPath, siteId);
   await execCmd(`git add ${fullPath}`);
   await execCmd(
     `git -c user.name="Github Actions" -c user.email="github_actions@github.com" commit -m "Added site_id"`
@@ -39596,12 +39603,12 @@ function execCmd(cmd) {
 }
 
 async function deploySite({ dir, client, siteId }) {
-  const fileNames = await (0,promises_namespaceObject.readdir)(dir, { recursive: true });
+  const fileNames = await (0,promises_.readdir)(dir, { recursive: true });
 
   const fileDigests = {};
   const fileContents = {};
   for (const fileName of fileNames) {
-    const content = await (0,promises_namespaceObject.readFile)(external_path_.join(dir, fileName), "utf-8");
+    const content = await (0,promises_.readFile)(external_path_.join(dir, fileName), "utf-8");
     const digest = (0,external_crypto_.createHash)("sha-1").update(content).digest("hex");
     fileContents[fileName] = content;
     fileDigests[fileName] = digest;
@@ -39633,7 +39640,9 @@ async function deploySite({ dir, client, siteId }) {
 
 __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(2939);
-/* harmony import */ var _action_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(1017);
+/* harmony import */ var _action_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(416);
+/* harmony import */ var fs_promises__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(1943);
+
 
 
 
@@ -39641,7 +39650,8 @@ try {
   const authToken = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token");
   const dir = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("dir");
   const customDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("custom_domain");
-  await (0,_action_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({ authToken, dir, customDomain });
+  const site = await (0,_action_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({ authToken, dir, customDomain });
+  await (0,fs_promises__WEBPACK_IMPORTED_MODULE_2__.appendFile)(process.env.GITHUB_STEP_SUMMARY, site.url);
 } catch (error) {
   // Handle errors and indicate failure
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);

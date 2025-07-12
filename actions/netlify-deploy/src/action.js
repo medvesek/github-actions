@@ -70,7 +70,7 @@ async function writeSiteId(siteId) {
   await writeFile(fullPath, siteId);
   await execCmd(`git add ${fullPath}`);
   await execCmd(
-    `git commit -m "Added site_id" --author="Github Actions <github_actions@github.com>"`
+    `git -c user.name="Github Actions" user.email="github_actions@github.com" commit -m "Added site_id"`
   );
 }
 

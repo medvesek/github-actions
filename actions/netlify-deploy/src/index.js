@@ -11,4 +11,5 @@ try {
 } catch (error) {
   // Handle errors and indicate failure
   core.setFailed(error.message);
+  throw error;
 }

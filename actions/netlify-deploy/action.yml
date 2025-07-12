@@ -16,7 +16,8 @@ inputs:
 outputs:
   url:
     description: "Url of the site"
-
+  default_domain:
+    description: "Default url"
 runs:
   using: "node20"
   main: "dist/index.js"

@@ -32,4 +32,4 @@ runs:
         token: ${{ inputs.cloudflare_token }}
         type: "CNAME"
         name: ${{ inputs.domain }}
-        content: ${{ steps.deploy.outputs.url }}
+        content: ${{ steps.deploy.outputs.default_domain }}

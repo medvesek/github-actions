@@ -38,7 +38,7 @@ async function findOrCreateSite({ customDomain, client }) {
     await client.updateSite({
       site_id: site.id,
       body: {
-        customDomain,
+        custom_domain: customDomain,
       },
     });
     console.log(`Site ${site.name} custom domain updated`);

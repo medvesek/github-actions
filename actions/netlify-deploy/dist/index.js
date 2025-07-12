@@ -39640,7 +39640,7 @@ try {
   const authToken = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token");
   const dir = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("dir");
   const customDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("custom_domain");
-  await (0,_action_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({ authToken, dir, customDomain, a });
+  await (0,_action_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({ authToken, dir, customDomain });
 } catch (error) {
   // Handle errors and indicate failure
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);

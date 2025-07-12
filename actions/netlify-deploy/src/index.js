@@ -9,9 +9,12 @@ try {
   const site = await createNetlifySite({ authToken, dir, customDomain });
   core.setOutput("url", site.url);
   core.setOutput("default_domain", site.default_domain);
-  await appendFile(process.env.GITHUB_STEP_SUMMARY, site.url);
+  await appendFile(process.env.GITHUB_STEP_SUMMARY, `${site.url}\n`);
   if (site.url !== site.default_domain) {
-    await appendFile(process.env.GITHUB_STEP_SUMMARY, site.default_domain);
+    await appendFile(
+      process.env.GITHUB_STEP_SUMMARY,
+      `${site.default_domain}\n`
+    );
   }
 } catch (error) {
   // Handle errors and indicate failure

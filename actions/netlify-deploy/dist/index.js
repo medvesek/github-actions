@@ -39655,6 +39655,7 @@ try {
   const dir = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("dir");
   const customDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("custom_domain");
   const site = await (0,_action_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({ authToken, dir, customDomain });
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("url", site.url);
   await (0,fs_promises__WEBPACK_IMPORTED_MODULE_2__.appendFile)(process.env.GITHUB_STEP_SUMMARY, site.url);
 } catch (error) {
   // Handle errors and indicate failure

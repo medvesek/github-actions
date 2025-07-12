@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import createCloudflareRecord from "./action";
+import createCloudflareRecord from "./action.js";
 
 try {
   const token = core.getInput("token");

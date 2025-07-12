@@ -9,7 +9,7 @@ export default class CloudflareClient {
     return zones.result[0];
   }
 
-  async findRecord({ zoneId, name, type }) {
+  async findRecord({ zoneId, name }) {
     const records = await this.client.dns.records.list({
       zone_id: zoneId,
       name,

@@ -2,36 +2,40 @@ import Cloudflare from "cloudflare";
 import CloudflareClient from "./cloudflare.js";
 
 export default async function createCloudflareRecord({
-  hostname,
+  name,
   apiToken,
-  targetIp,
+  content,
+  type,
 }) {
   const client = new CloudflareClient(new Cloudflare({ apiToken }));
 
-  const zone = await client.findZone(hostname);
+  const zone = await client.findZone(name);
   if (!zone) {
-    throw new Error(`Zone for ${hostname} not found`);
+    throw new Error(`Zone for ${name} not found`);
   }
-  const record = await client.findRecord(zone.id, hostname);
+  const zoneId = zone.id;
+  let record = await client.findRecord({ zoneId, name });
 
   if (!record) {
-    await client.createDnsRecord({
-      zoneId: zone.id,
-      name: hostname,
-      content: targetIp,
+    record = await client.createDnsRecord({
+      zoneId,
+      name,
+      content,
+      type,
     });
-    console.log(`Record for ${hostname} created!`);
-  } else if (record.content !== targetIp) {
-    await client.updateDnsRecord({
-      recordId: record.id,
-      zoneId: zone.id,
-      name: hostname,
-      content: targetIp,
+    console.log(`Record for ${name} created!`);
+  } else if (record.content !== content || record.type !== type) {
+    record = await client.updateDnsRecord(record.id, {
+      zoneId,
+      name,
+      content,
+      type,
     });
-    console.log(`Record for ${hostname} updated!`);
+    console.log(`Record for ${name} updated!`);
   } else {
     console.log(
-      `Record for ${hostname} already exists and is configured correctly!`
+      `Record for ${name} already exists and is configured correctly!`
     );
   }
+  return record;
 }

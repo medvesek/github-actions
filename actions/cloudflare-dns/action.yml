@@ -3,13 +3,16 @@ description: "Create cloudflare dns record"
 
 inputs:
   token:
-    description: "Cloudflare API token"
+    description: "Cloudflare API token (permissions: read zones, edit dns)"
     required: true
-  hostname:
-    description: "hostname"
+  type:
+    description: "Type of dns record (A, CNAME)"
     required: true
-  ip:
-    description: "target ip"
+  name:
+    description: "Name of the record - domain name"
+    required: true
+  content:
+    description: "Content of the record - ip (A) or another domain (CNAME)"
     required: true
 
 runs:

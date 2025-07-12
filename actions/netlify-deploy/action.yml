@@ -13,6 +13,10 @@ inputs:
     description: Custom domain, if used
     required: false
 
+outputs:
+  url:
+    description: "Url of the site"
+
 runs:
   using: "node20"
   main: "dist/index.js"

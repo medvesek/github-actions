@@ -7,6 +7,7 @@ try {
   const dir = core.getInput("dir");
   const customDomain = core.getInput("custom_domain");
   const site = await createNetlifySite({ authToken, dir, customDomain });
+  core.setOutput("url", site.url);
   await appendFile(process.env.GITHUB_STEP_SUMMARY, site.url);
 } catch (error) {
   // Handle errors and indicate failure

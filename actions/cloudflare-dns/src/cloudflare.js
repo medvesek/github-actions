@@ -9,31 +9,31 @@ export default class CloudflareClient {
     return zones.result[0];
   }
 
-  async findRecord(zoneId, hostname) {
+  async findRecord({ zoneId, name, type }) {
     const records = await this.client.dns.records.list({
       zone_id: zoneId,
-      name: hostname,
+      name,
     });
 
     return records.result[0];
   }
 
-  createDnsRecord({ zoneId, name, content }) {
+  createDnsRecord({ zoneId, name, content, type }) {
     return this.client.dns.records.create({
       zone_id: zoneId,
       name,
-      type: "A",
+      type,
       proxied: true,
       content,
     });
   }
 
-  updateDnsRecord({ recordId, zoneId, name, content }) {
+  updateDnsRecord(recordId, { zoneId, name, content, type }) {
     return this.client.dns.records.update(recordId, {
       zone_id: zoneId,
       name,
       content,
-      type: "A",
+      type,
       proxied: true,
     });
   }

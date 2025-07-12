@@ -1,3 +1,4 @@
+import a from "@netlify/open-api";
 import { NetlifyAPI } from "@netlify/api";
 import { readdir, readFile, writeFile, mkdir } from "fs/promises";
 import { createHash } from "crypto";
@@ -11,7 +12,7 @@ export default async function deployToNetlify({
 }) {
   const client = new NetlifyAPI(authToken);
   const site = await findOrCreateSite({ customDomain, client });
-
+  a;
   await deploySite({ siteId: site.id, client, dir });
   console.log(`Site ${site.name} has been deployed`);
 }

@@ -1,3 +1,4 @@
+import a from "@netlify/open-api";
 import * as core from "@actions/core";
 import createNetlifySite from "./action.js";
 
@@ -5,7 +6,8 @@ try {
   const authToken = core.getInput("token");
   const dir = core.getInput("dir");
   const customDomain = core.getInput("custom_domain");
-  await createNetlifySite({ authToken, dir, customDomain });
+  await createNetlifySite({ authToken, dir, customDomain, a });
+  console.log(a);
 } catch (error) {
   // Handle errors and indicate failure
   core.setFailed(error.message);

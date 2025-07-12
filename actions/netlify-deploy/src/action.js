@@ -55,7 +55,7 @@ async function getSiteId() {
   try {
     return await readFile(await siteIdPath(), "utf-8");
   } catch (e) {
-    if (e.code === "ENOENT") {
+    if (["ENOENT", "EISDIR"].includes(e.code)) {
       console.log("site_id file not found");
       return null;
     }

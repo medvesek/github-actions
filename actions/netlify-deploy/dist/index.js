@@ -39656,7 +39656,11 @@ try {
   const customDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("custom_domain");
   const site = await (0,_action_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({ authToken, dir, customDomain });
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("url", site.url);
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput("default_domain", site.default_domain);
   await (0,fs_promises__WEBPACK_IMPORTED_MODULE_2__.appendFile)(process.env.GITHUB_STEP_SUMMARY, site.url);
+  if (site.url !== site.default_domain) {
+    await (0,fs_promises__WEBPACK_IMPORTED_MODULE_2__.appendFile)(process.env.GITHUB_STEP_SUMMARY, site.default_domain);
+  }
 } catch (error) {
   // Handle errors and indicate failure
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);

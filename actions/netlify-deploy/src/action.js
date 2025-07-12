@@ -1,4 +1,3 @@
-import a from "@netlify/open-api";
 import { NetlifyAPI } from "@netlify/api";
 import { readdir, readFile, writeFile, mkdir } from "fs/promises";
 import { createHash } from "crypto";

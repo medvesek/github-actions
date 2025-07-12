@@ -1,4 +1,3 @@
-import a from "@netlify/open-api";
 import * as core from "@actions/core";
 import createNetlifySite from "./action.js";
 

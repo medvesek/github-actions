@@ -95,7 +95,7 @@ async function deploySite({ dir, client, siteId }) {
   const files = await readdir(dir, { recursive: true, withFileTypes: true });
   const fileNames = files
     .filter((file) => !file.isDirectory())
-    .map((file) => `${file.parentPath}/${file.name}`);
+    .map((file) => path.relative(dir, path.join(file.parentPath, file.name)));
 
   const fileDigests = {};
   const fileContents = {};

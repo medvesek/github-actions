@@ -11,7 +11,6 @@ export default async function deployToNetlify({
 }) {
   const client = new NetlifyAPI(authToken);
   const site = await findOrCreateSite({ customDomain, client });
-  a;
   await deploySite({ siteId: site.id, client, dir });
   console.log(`Site ${site.name} has been deployed`);
 }

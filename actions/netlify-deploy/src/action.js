@@ -92,7 +92,10 @@ function execCmd(cmd) {
 }
 
 async function deploySite({ dir, client, siteId }) {
-  const fileNames = await readdir(dir, { recursive: true });
+  const files = await readdir(dir, { recursive: true, withFileTypes: true });
+  const fileNames = files
+    .filter((file) => !file.isDirectory())
+    .map((file) => file.name);
 
   const fileDigests = {};
   const fileContents = {};

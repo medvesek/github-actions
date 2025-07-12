@@ -4,8 +4,8 @@ on:
   push:
   workflow_dispatch:
 jobs:
-  build_cloudflare_dns_action:
-    name: Build cloudflare-dns action
+  build:
+    name: Build actions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -13,3 +13,6 @@ jobs:
       - uses: ./.github/actions/build-js-action
         with:
           dir: actions/cloudflare-dns
+      - uses: ./.github/actions/build-js-action
+        with:
+          dir: actions/netlify-deploy

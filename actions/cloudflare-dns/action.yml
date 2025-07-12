@@ -2,14 +2,14 @@ name: "Create cloudflare dns record"
 description: "Create cloudflare dns record"
 
 inputs:
-  CLOUDFLARE_API_TOKEN:
-    description: "Cloudflare token"
+  token:
+    description: "Cloudflare API token"
     required: true
   hostname:
-    description: hostname
+    description: "hostname"
     required: true
-  targetIp:
-    description: targetIp
+  ip:
+    description: "target ip"
     required: true
 
 runs:

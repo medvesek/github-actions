@@ -1,0 +1,68 @@
+name: Netlify deploy
+description: Netlify deploy
+
+inputs:
+  CLOUDFLARE_API_TOKEN:
+    description: "Cloudflare token"
+    required: false
+  NETLIFY_AUTH_TOKEN:
+    description: Netlify auth token
+    required: true
+  dir:
+    description: "dir"
+    required: false
+    default: "."
+  custom_domain:
+    description: custom_domain
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Env
+      shell: bash
+      run: echo NETLIFY_AUTH_TOKEN=${{ inputs.NETLIFY_AUTH_TOKEN }} >> $GITHUB_ENV
+
+    - name: Setup NodeJS
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Setup
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y jq
+        npm install -g netlify-cli
+
+    - name: Existing site
+      if: env.NETLIFY_SITE_ID == ''
+      shell: bash
+      run: echo NETLIFY_SITE_ID=$(cat .github/netlify 2>/dev/null || true) >> $GITHUB_ENV
+
+    - name: Create new site
+      if: env.NETLIFY_SITE_ID == ''
+      shell: bash
+      run: |
+        custom_domain=${{ inputs.custom_domain }}
+        response=$(netlify api createSite ${custom_domain:+--custom_domain="$custom_domain"}) 
+        NETLIFY_SITE_ID=$(echo $response | jq -r '.id')
+        echo $NETLIFY_SITE_ID > .github/netlify
+        echo NETLIFY_SITE_ID=$NETLIFY_SITE_ID >> $GITHUB_ENV
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add .
+        git commit -m "Add site_id"
+        git push
+
+    - name: Deploy
+      shell: bash
+      run: |
+        netlify deploy \
+        --site ${{ env.NETLIFY_SITE_ID }} \
+        --dir ${{ inputs.dir }} \
+        --prod \
+        --json \
+        --no-build \
+        | jq -r '.url' \
+        >> $GITHUB_STEP_SUMMARY

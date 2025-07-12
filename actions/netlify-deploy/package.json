@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
+    "@netlify/api": "^14.0.3"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.0"
+  }
+}

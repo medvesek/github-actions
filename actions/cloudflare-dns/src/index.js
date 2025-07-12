@@ -1,10 +1,10 @@
 import * as core from "@actions/core";
-import createCloudflareRecord from "./actions";
+import createCloudflareRecord from "./action";
 
 try {
-  const apiToken = core.getInput("CLOUDFLARE_API_TOKEN");
+  const apiToken = core.getInput("token");
   const hostname = core.getInput("hostname");
-  const targetIp = core.getInput("targetIp");
+  const targetIp = core.getInput("ip");
   await createCloudflareRecord({ apiToken, hostname, targetIp });
 } catch (error) {
   // Handle errors and indicate failure

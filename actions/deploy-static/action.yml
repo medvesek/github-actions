@@ -21,13 +21,13 @@ runs:
   steps:
     - name: Deploy
       id: deploy
-      uses: ../netlify-deploy
+      uses: medvesek/github-actions/actions/netlify-deploy@master
       with:
         token: ${{ inputs.netlify_token }}
         dir: ${{ inputs.dir }}
         custom_domain: ${{ inputs.domain }}
     - name: DNS
-      uses: ../cloduflare-dns
+      uses: medvesek/github-actions/actions/cloudflare-dns@master
       with:
         token: ${{ inputs.cloudflare_token }}
         type: "CNAME"

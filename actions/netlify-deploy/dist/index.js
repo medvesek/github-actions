@@ -39516,7 +39516,6 @@ async function deployToNetlify({
 }) {
   const client = new NetlifyAPI(authToken);
   const site = await findOrCreateSite({ customDomain, client });
-  a;
   await deploySite({ siteId: site.id, client, dir });
   console.log(`Site ${site.name} has been deployed`);
 }
@@ -39642,7 +39641,6 @@ try {
   const dir = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("dir");
   const customDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("custom_domain");
   await (0,_action_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({ authToken, dir, customDomain, a });
-  console.log(a);
 } catch (error) {
   // Handle errors and indicate failure
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);

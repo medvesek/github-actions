@@ -39525,6 +39525,7 @@ async function deployToNetlify({
   const site = await findOrCreateSite({ customDomain, client });
   await deploySite({ siteId: site.id, client, dir });
   console.log(`Site ${site.name} has been deployed`);
+  return site;
 }
 
 async function findOrCreateSite({ customDomain, client }) {

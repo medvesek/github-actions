@@ -39610,11 +39610,14 @@ async function deploySite({ dir, client, siteId }) {
     .map((file) => external_path_.relative(dir, external_path_.join(file.parentPath, file.name)));
 
   const fileDigests = {};
-  const fileContents = {};
+  const digestFiles = {};
   for (const fileName of fileNames) {
     const content = await (0,promises_.readFile)(external_path_.join(dir, fileName), "utf-8");
     const digest = (0,external_crypto_.createHash)("sha-1").update(content).digest("hex");
-    fileContents[fileName] = content;
+    digestFiles[digest] = {
+      content,
+      path: fileName,
+    };
     fileDigests[fileName] = digest;
   }
 
@@ -39625,11 +39628,11 @@ async function deploySite({ dir, client, siteId }) {
     },
   });
 
-  const requests = fileNames.map((fileName) =>
+  const requests = (deploy?.required || []).map((digest) =>
     client.uploadDeployFile({
       deploy_id: deploy.id,
-      path: fileName,
-      body: fileContents[fileName],
+      path: digestFiles[digest].path,
+      body: digestFiles[digest].content,
     })
   );
 

@@ -39661,7 +39661,7 @@ try {
   if (site.url !== site.default_domain) {
     await (0,fs_promises__WEBPACK_IMPORTED_MODULE_2__.appendFile)(
       process.env.GITHUB_STEP_SUMMARY,
-      `${site.default_domain}\n`
+      `https://${site.default_domain}\n`
     );
   }
 } catch (error) {

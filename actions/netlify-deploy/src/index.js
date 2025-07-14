@@ -13,7 +13,7 @@ try {
   if (site.url !== site.default_domain) {
     await appendFile(
       process.env.GITHUB_STEP_SUMMARY,
-      `${site.default_domain}\n`
+      `https://${site.default_domain}\n`
     );
   }
 } catch (error) {

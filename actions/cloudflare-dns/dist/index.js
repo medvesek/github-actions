@@ -74758,6 +74758,7 @@ class CloudflareClient {
       type,
       proxied: true,
       content,
+      comment: "Created from github actions",
     });
   }
 
